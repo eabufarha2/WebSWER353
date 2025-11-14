@@ -17,10 +17,11 @@
       <h2>#stayhome</h2>
       <p>Save more with coupons & up to 70% off!</p>
     </section>
-    <section class="section-p1" style="text-align:center;">
+    <section class="section-p1" style="text-align:center;" data-testid="shop-controls">
       <input
         type="text"
         id="searchInput"
+        data-testid="search-input"
         placeholder="Search products by name..."
         style="
           width: 250px;
@@ -29,7 +30,7 @@
           font-size: 14px;
         "
       />
-      <select id="sortSelect" style="padding: 8px 12px; font-size: 14px;">
+      <select id="sortSelect" data-testid="sort-select" style="padding: 8px 12px; font-size: 14px;">
         <option value="">Sort By</option>
         <option value="nameAsc">Name (A-Z)</option>
         <option value="nameDesc">Name (Z-A)</option>
@@ -37,11 +38,12 @@
         <option value="priceDesc">Price (High-Low)</option>
       </select>
     </section>
-    <section id="products1" class="section-p1">
+    <section id="products1" class="section-p1" data-testid="shop-section">
       <h2>Shop Products</h2>
-      <div class="pro-container" id="shop-products"></div>
+      <div class="pro-container" id="shop-products" data-testid="shop-products-container"></div>
     </section>
     <div id="footer-placeholder"></div>
+    <script src="js/config.js"></script>
     <script src="js/global.js"></script>
     <script src="js/shop.js"></script>
   </body>

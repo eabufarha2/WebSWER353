@@ -68,49 +68,60 @@
     </section>
 
     <section id="form-details">
-      <form id="contactForm">
+      <form id="contactForm" data-testid="contact-form">
         <span>LEAVE A MESSAGE</span>
         <h2>We love to hear from you</h2>
 
-        <!-- Name Field (no "required" or other HTML validation) -->
-        <input 
-          type="text" 
-          id="name" 
-          name="name" 
+        <!-- Name Field -->
+        <input
+          type="text"
+          id="name"
+          name="name"
+          data-testid="contact-name-input"
           placeholder="Your Name"
+          required
+          minlength="2"
         />
-        <div id="name-error" class="error-message"></div>
+        <div id="name-error" class="error-message" data-testid="name-error"></div>
 
-        <!-- Email Field (no "required" or other HTML validation) -->
-        <input 
-          type="text" 
-          id="email" 
-          name="email" 
+        <!-- Email Field -->
+        <input
+          type="email"
+          id="email"
+          name="email"
+          data-testid="contact-email-input"
           placeholder="E-mail"
+          required
         />
-        <div id="email-error" class="error-message"></div>
+        <div id="email-error" class="error-message" data-testid="email-error"></div>
 
         <!-- Subject Field -->
-        <input 
-          type="text" 
-          id="subject" 
-          name="subject" 
+        <input
+          type="text"
+          id="subject"
+          name="subject"
+          data-testid="contact-subject-input"
           placeholder="Subject"
+          required
+          minlength="3"
         />
-        <div id="subject-error" class="error-message"></div>
+        <div id="subject-error" class="error-message" data-testid="subject-error"></div>
 
         <!-- Message Field -->
-        <textarea 
-          id="message" 
-          name="message" 
-          cols="30" 
-          rows="5" 
+        <textarea
+          id="message"
+          name="message"
+          data-testid="contact-message-input"
+          cols="30"
+          rows="5"
           placeholder="Your MESSAGE"
+          required
+          minlength="10"
         ></textarea>
-        <div id="message-error" class="error-message"></div>
+        <div id="message-error" class="error-message" data-testid="message-error"></div>
 
-        <button type="submit" class="normal" id="submit-button">Submit</button>
-        <div id="formFeedback" style="display: none; margin-top: 20px;"></div>
+        <button type="submit" class="normal" id="submit-button" data-testid="contact-submit-btn">Submit</button>
+        <div id="formFeedback" data-testid="form-feedback" style="display: none; margin-top: 20px;"></div>
       </form>
 
       <div class="people">

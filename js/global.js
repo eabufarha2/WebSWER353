@@ -1,6 +1,7 @@
 
-const DISCOUNT_RATE = 0.7; 
-const SHIPPING_COST = 5;   
+const DISCOUNT_RATE = 0.7;
+const SHIPPING_COST = 5;
+const CURRENCY = '₪';  // ILS (Israeli Shekel)
 
 
 function applyDiscount(price) {
@@ -19,10 +20,20 @@ document.addEventListener('DOMContentLoaded', () => {
         headerPlaceholder.innerHTML = data;
         setupMobileMenu();
 
-        highlightCurrentNav(); 
+        highlightCurrentNav();
 
         console.log('Header loaded successfully.');
         updateCartCount();
+
+        // Add readiness marker
+        const readyMarker = document.createElement('div');
+        readyMarker.id = 'header-loaded';
+        readyMarker.setAttribute('data-ready', 'true');
+        readyMarker.style.display = 'none';
+        headerPlaceholder.appendChild(readyMarker);
+
+        // Dispatch custom event for Selenium
+        document.dispatchEvent(new Event('headerLoaded'));
       }
     })
     .catch(error => {
@@ -37,6 +48,16 @@ document.addEventListener('DOMContentLoaded', () => {
       if (footerPlaceholder) {
         footerPlaceholder.innerHTML = data;
         console.log('Footer loaded successfully.');
+
+        // Add readiness marker
+        const readyMarker = document.createElement('div');
+        readyMarker.id = 'footer-loaded';
+        readyMarker.setAttribute('data-ready', 'true');
+        readyMarker.style.display = 'none';
+        footerPlaceholder.appendChild(readyMarker);
+
+        // Dispatch custom event for Selenium
+        document.dispatchEvent(new Event('footerLoaded'));
       }
     })
     .catch(error => {
@@ -141,8 +162,8 @@ function generateStarsHTML(rating) {
 
 function generateProductHTML(product) {
   const discountedPrice = applyDiscount(product.price);
-  const formattedOriginalPrice = `₪‎${product.price.toFixed(2)}`;
-  const formattedDiscountedPrice = `₪‎${discountedPrice.toFixed(2)}`;
+  const formattedOriginalPrice = `${CURRENCY}${product.price.toFixed(2)}`;
+  const formattedDiscountedPrice = `${CURRENCY}${discountedPrice.toFixed(2)}`;
   const discountPercentage = `${(DISCOUNT_RATE * 100).toFixed(0)}% OFF`;
   const fallbackImg = "https://via.placeholder.com/300?text=No+Image";
 
@@ -152,27 +173,29 @@ function generateProductHTML(product) {
          data-name="${product.name}"
          data-price="${discountedPrice}"
          data-img="${product.image}"
-         data-brand="${product.brand}">
-      
-      <a href="product-detail.html?id=${product.id}">
+         data-brand="${product.brand}"
+         data-testid="product-card">
+
+      <a href="product-detail.html?id=${product.id}" data-testid="product-link-${product.id}">
         <img src="${product.image}" alt="${product.name}"
+             data-testid="product-image-${product.id}"
              onerror="this.onerror=null;this.src='${fallbackImg}';" />
       </a>
-      <div class="discount-badge">${discountPercentage}</div>
+      <div class="discount-badge" data-testid="discount-badge">${discountPercentage}</div>
       <div class="des">
-        <span>${product.brand}</span>
+        <span data-testid="product-brand">${product.brand}</span>
         <h5>
-          <a href="product-detail.html?id=${product.id}">${product.name}</a>
+          <a href="product-detail.html?id=${product.id}" data-testid="product-name-link">${product.name}</a>
         </h5>
-        <div class="star">
+        <div class="star" data-testid="product-rating">
           ${generateStarsHTML(product.rating)}
         </div>
         <h4>
-          <span class="original-price">${formattedOriginalPrice}</span>
-          <span class="discounted-price">${formattedDiscountedPrice}</span>
+          <span class="original-price" data-testid="original-price">${formattedOriginalPrice}</span>
+          <span class="discounted-price" data-testid="discounted-price">${formattedDiscountedPrice}</span>
         </h4>
       </div>
-      <a href="#" class="cart">
+      <a href="#" class="cart" data-testid="add-to-cart-btn-${product.id}">
         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
       </a>
     </div>

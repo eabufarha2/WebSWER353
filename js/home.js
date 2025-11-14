@@ -5,7 +5,8 @@
  *******************************************************/
 
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('products.json')
+  const dataSource = AppConfig.getDataSource();
+  fetch(dataSource)
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -37,6 +38,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Now that all products are rendered, bind the Add to Cart event
       setupAddToCartHandlers();
+
+      // Add readiness marker
+      const readyMarker = document.createElement('div');
+      readyMarker.id = 'products-loaded';
+      readyMarker.setAttribute('data-ready', 'true');
+      readyMarker.style.display = 'none';
+      document.body.appendChild(readyMarker);
+
+      // Dispatch custom event for Selenium
+      document.dispatchEvent(new Event('productsLoaded'));
+      console.log('Products loaded event dispatched.');
     })
     .catch(error => {
       console.error('Error fetching products.json for Home page:', error);

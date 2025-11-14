@@ -16,38 +16,39 @@
   <body>
     <div id="header-placeholder"></div>
 
-    <section id="hero">
+    <section id="hero" data-testid="hero-section">
       <h4 style="z-index: 1">Trade-in-offer</h4>
       <h2 style="z-index: 1">Super value deals</h2>
       <h1 style="z-index: 1">On all products</h1>
       <p style="z-index: 1">Save more with coupons & up to 70% off!</p>
-      <button style="z-index: 1">
+      <button style="z-index: 1" data-testid="hero-shop-now-btn">
         <a style="z-index: 1" href="shop.html">Shop Now</a>
       </button>
     </section>
 
     <section id="feature" class="section-p1"></section>
 
-    <section id="products1" class="section-p1">
+    <section id="products1" class="section-p1" data-testid="featured-section">
       <h2>Featured Products</h2>
       <p>Summer Collection New Perfumia</p>
-      <div class="pro-container" id="featured-products"></div>
+      <div class="pro-container" id="featured-products" data-testid="featured-products-container"></div>
     </section>
 
-    <section id="banner" class="section-m1">
+    <section id="banner" class="section-m1" data-testid="banner-section">
       <h4>Big Discounts</h4>
       <h2>Up to <span>70% Off</span> - All Perfumes</h2>
-      <button class="normal">Explore More</button>
+      <button class="normal" data-testid="banner-explore-btn">Explore More</button>
     </section>
 
-    <section id="new-arrivals-section" class="section-p1">
+    <section id="new-arrivals-section" class="section-p1" data-testid="new-arrivals-section">
       <h2>New Arrivals</h2>
       <p>Summer Collection New Perfumia</p>
-      <div class="pro-container" id="new-arrivals"></div>
+      <div class="pro-container" id="new-arrivals" data-testid="new-arrivals-container"></div>
     </section>
 
     <div id="footer-placeholder"></div>
 
+    <script src="js/config.js"></script>
     <script src="js/global.js"></script>
     <script src="js/home.js"></script>
   </body>

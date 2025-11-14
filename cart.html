@@ -15,7 +15,7 @@
   <body>
     <div id="header-placeholder"></div>
 
-    <section class="cart-1" id="cartItems">
+    <section class="cart-1" id="cartItems" data-testid="cart-items-section">
       <div class="cart-header">
         <h2>Your Cart is empty</h2>
       </div>
@@ -26,23 +26,31 @@
         <table>
           <tr>
             <td>Subtotal</td>
-            <td id="subtotal">₪‎0.00</td>
+            <td id="subtotal" data-testid="cart-subtotal">₪0.00</td>
           </tr>
           <tr>
             <td>Shipping</td>
-            <td>₪‎5.00</td>
+            <td data-testid="cart-shipping">₪5.00</td>
           </tr>
           <tr>
             <td>Total</td>
-            <td id="total">₪‎5.00</td>
+            <td id="total" data-testid="cart-total">₪5.00</td>
           </tr>
         </table>
-        <button class="normal" id="checkoutBtn">Pay</button>
+        <button class="normal" id="checkoutBtn" data-testid="checkout-btn">Pay</button>
+
+        <!-- Dev/Test Buttons for Selenium -->
+        <div style="margin-top: 20px; padding-top: 10px; border-top: 1px dashed #ccc;">
+          <p style="font-size: 12px; color: #666; margin-bottom: 10px;">Dev Tools (for testing):</p>
+          <button class="normal" id="resetCartBtn" data-testid="reset-cart-btn" style="background-color: #e74c3c; margin-right: 10px;">Reset Cart</button>
+          <button class="normal" id="seedCartBtn" data-testid="seed-cart-btn" style="background-color: #3498db;">Seed Cart</button>
+        </div>
       </div>
     </section>
 
     <div
       id="checkoutMessage"
+      data-testid="checkout-message"
       style="
         display: none;
         text-align: center;

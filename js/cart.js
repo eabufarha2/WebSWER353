@@ -64,26 +64,27 @@ function updateCartDisplay() {
     const itemTotal = item.qty * item.price;
     subtotal += itemTotal;
     html += `
-      <tr>
+      <tr data-testid="cart-item-row">
         <td>
-          <img src="${item.img}" 
-               width="50" 
-               alt="${item.name}" 
+          <img src="${item.img}"
+               width="50"
+               alt="${item.name}"
+               data-testid="cart-item-image"
                onerror="this.onerror=null;this.src='${fallbackImg}';" />
         </td>
         <td>
-          <a href="product-detail.html?id=${item.id || ''}">
+          <a href="product-detail.html?id=${item.id || ''}" data-testid="cart-item-link">
             ${item.name}
           </a>
         </td>
-        <td>₪‎${item.price.toFixed(2)}</td>
+        <td data-testid="cart-item-price">${CURRENCY}${item.price.toFixed(2)}</td>
         <td>
-          <button class="qtyBtn" data-index="${index}" data-action="minus">-</button>
-          ${item.qty}
-          <button class="qtyBtn" data-index="${index}" data-action="plus">+</button>
+          <button class="qtyBtn" data-index="${index}" data-action="minus" data-testid="qty-minus-btn">-</button>
+          <span data-testid="cart-item-qty">${item.qty}</span>
+          <button class="qtyBtn" data-index="${index}" data-action="plus" data-testid="qty-plus-btn">+</button>
         </td>
         <td>
-          <button class="removeBtn" data-index="${index}">X</button>
+          <button class="removeBtn" data-index="${index}" data-testid="cart-remove-btn">X</button>
         </td>
       </tr>
     `;
@@ -93,8 +94,8 @@ function updateCartDisplay() {
   cartSection.innerHTML += html;
 
   const total = subtotal + SHIPPING_COST;
-  document.getElementById('subtotal').textContent = `₪‎${subtotal.toFixed(2)}`;
-  document.getElementById('total').textContent = `₪‎${total.toFixed(2)}`;
+  document.getElementById('subtotal').textContent = `${CURRENCY}${subtotal.toFixed(2)}`;
+  document.getElementById('total').textContent = `${CURRENCY}${total.toFixed(2)}`;
 
   // Bind remove / qty events
   const removeBtns = document.querySelectorAll('.removeBtn');
@@ -102,6 +103,10 @@ function updateCartDisplay() {
 
   const qtyBtns = document.querySelectorAll('.qtyBtn');
   qtyBtns.forEach(btn => btn.addEventListener('click', updateItemQty));
+
+  // Dispatch custom event for Selenium
+  document.dispatchEvent(new Event('cartUpdated'));
+  console.log('Cart updated event dispatched.');
 }
 
 function removeItem(e) {
@@ -171,3 +176,57 @@ function handleCheckout() {
     <p>Your order is being processed, and your cart is now empty.</p>
   `;
 }
+
+// Dev/Test Functions for Selenium
+function resetCart() {
+  cart = [];
+  saveCartToLocalStorage();
+  updateCartCount();
+  updateCartDisplay();
+  console.log('Cart has been reset.');
+}
+
+function seedCart() {
+  // Add sample test data to cart
+  cart = [
+    {
+      id: "F1",
+      name: "Eternal Bloom Perfume",
+      price: 750,  // Already discounted (2500 * 0.3)
+      img: "image/mens/invictus-52.jpg",
+      qty: 2
+    },
+    {
+      id: "N1",
+      name: "Future Essence Perfume",
+      price: 750,
+      img: "image/bestsellers/jean-paul-60.jpg",
+      qty: 1
+    },
+    {
+      id: "P1",
+      name: "Eternal Bloom Perfume",
+      price: 750,
+      img: "image/mens/invictus-52.jpg",
+      qty: 3
+    }
+  ];
+  saveCartToLocalStorage();
+  updateCartCount();
+  updateCartDisplay();
+  console.log('Cart has been seeded with test data.');
+}
+
+// Bind dev button events
+document.addEventListener('DOMContentLoaded', () => {
+  const resetBtn = document.getElementById('resetCartBtn');
+  const seedBtn = document.getElementById('seedCartBtn');
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', resetCart);
+  }
+
+  if (seedBtn) {
+    seedBtn.addEventListener('click', seedCart);
+  }
+});

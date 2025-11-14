@@ -1,28 +1,28 @@
-<section id="header">
-  <a href="index.html"><img src="image/logo.png" class="logo" alt="Logo" /></a>
+<section id="header" data-testid="header">
+  <a href="index.html" data-testid="logo-link"><img src="image/logo.png" class="logo" alt="Logo" /></a>
   <div>
-    <ul id="navbar">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="shop.html">Shop</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
+    <ul id="navbar" data-testid="navbar">
+      <li><a href="index.html" data-testid="nav-home">Home</a></li>
+      <li><a href="shop.html" data-testid="nav-shop">Shop</a></li>
+      <li><a href="about.html" data-testid="nav-about">About</a></li>
+      <li><a href="contact.html" data-testid="nav-contact">Contact</a></li>
 
       <li id="lg-bag">
-        <a href="cart.html">
+        <a href="cart.html" data-testid="nav-cart-link">
           <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-          <span id="cartCount">0</span>
+          <span id="cartCount" data-testid="cart-count">0</span>
         </a>
       </li>
 
-      <a href="#" id="close">
+      <a href="#" id="close" data-testid="mobile-close-btn">
         <i class="fa fa-times" aria-hidden="true"></i>
       </a>
     </ul>
   </div>
   <div id="mobile">
-    <a href="cart.html">
+    <a href="cart.html" data-testid="mobile-cart-link">
       <i class="fa fa-shopping-cart" aria-hidden="true"></i>
     </a>
-    <i id="bar" class="fa fa-outdent" aria-hidden="true"></i>
+    <i id="bar" class="fa fa-outdent" aria-hidden="true" data-testid="mobile-menu-toggle"></i>
   </div>
 </section>
