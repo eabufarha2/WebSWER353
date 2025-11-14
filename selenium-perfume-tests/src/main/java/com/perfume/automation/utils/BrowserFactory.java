@@ -80,6 +80,9 @@ public class BrowserFactory {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
 
+        // Allow JavaScript to fetch local files from file:// protocol
+        options.addArguments("--allow-file-access-from-files");
+
         return new ChromeDriver(options);
     }
 

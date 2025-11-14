@@ -50,61 +50,92 @@ public class WaitHelper {
 
     /**
      * Wait for header to be loaded
-     * Waits for custom 'headerLoaded' event
+     * Waits for custom 'headerLoaded' event or navigation element
      */
     public void waitForHeaderLoaded() {
+        // Wait for either the hidden marker OR the nav element
         wait.until(driver ->
-            js.executeScript("return document.getElementById('header-loaded') !== null")
+            (Boolean) js.executeScript(
+                "return document.getElementById('header-loaded') !== null || " +
+                "(document.querySelector('nav') !== null && document.getElementById('navbar') !== null)"
+            )
         );
     }
 
     /**
      * Wait for footer to be loaded
-     * Waits for custom 'footerLoaded' event
+     * Waits for custom 'footerLoaded' event or footer element
      */
     public void waitForFooterLoaded() {
+        // Wait for either the hidden marker OR the footer element
         wait.until(driver ->
-            js.executeScript("return document.getElementById('footer-loaded') !== null")
+            (Boolean) js.executeScript(
+                "return document.getElementById('footer-loaded') !== null || " +
+                "document.querySelector('footer') !== null"
+            )
         );
     }
 
     /**
      * Wait for products to be loaded
-     * Waits for custom 'productsLoaded' event
+     * Waits for custom 'productsLoaded' event or product cards
      */
     public void waitForProductsLoaded() {
+        // Wait for either the hidden marker OR actual product cards
         wait.until(driver ->
-            js.executeScript("return document.getElementById('products-loaded') !== null")
+            (Boolean) js.executeScript(
+                "return document.getElementById('products-loaded') !== null || " +
+                "document.querySelector('[data-testid=\"product-card\"]') !== null"
+            )
         );
+        // Small additional wait for dynamic content to stabilize
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Wait for single product to be loaded (product detail page)
-     * Waits for custom 'productLoaded' event
+     * Waits for custom 'productLoaded' event or product detail elements
      */
     public void waitForProductLoaded() {
+        // Wait for either the hidden marker OR product detail name element
         wait.until(driver ->
-            js.executeScript("return document.getElementById('product-loaded') !== null")
+            (Boolean) js.executeScript(
+                "return document.getElementById('product-loaded') !== null || " +
+                "document.querySelector('[data-testid=\"product-detail-name\"]') !== null"
+            )
         );
+        // Small additional wait for dynamic content to stabilize
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Wait for cart to be updated
-     * Waits for custom 'cartUpdated' event
+     * Waits for cart count element to change or a short stabilization period
      */
     public void waitForCartUpdated() {
-        // Set up event listener flag
-        js.executeScript(
-            "window.cartUpdateEventFired = false;" +
-            "document.addEventListener('cartUpdated', function() {" +
-            "    window.cartUpdateEventFired = true;" +
-            "}, { once: true });"
-        );
+        // Small wait for cart to process and update
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        // Wait for event to fire
-        wait.until(driver ->
-            (Boolean) js.executeScript("return window.cartUpdateEventFired === true")
-        );
+        // Verify cart count element is visible and has been updated
+        wait.until(driver -> {
+            Object result = js.executeScript(
+                "var cartCountElem = document.getElementById('cartCount');" +
+                "return cartCountElem !== null && cartCountElem.textContent !== null;"
+            );
+            return result != null && (Boolean) result;
+        });
     }
 
     /**

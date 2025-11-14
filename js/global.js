@@ -233,8 +233,12 @@ function setupAddToCartHandlers() {
         productDiv = e.target.closest('.single-pro-image');
       }
       if (!productDiv) {
-        console.warn('No product container found on Add to Cart click.');
-        return;
+        // fallback to button itself (for product detail page)
+        productDiv = e.target.closest('button.cart');
+        if (!productDiv) {
+          console.warn('No product container found on Add to Cart click.');
+          return;
+        }
       }
 
       const productId = productDiv.getAttribute('data-id');
@@ -255,6 +259,9 @@ function setupAddToCartHandlers() {
       saveCartToLocalStorage();
       updateCartCount();
       showCartNotification(`${name} added to cart!`);
+
+      // Dispatch custom event for Selenium
+      document.dispatchEvent(new Event('cartUpdated'));
 
       // if on cart page, refresh it
       if (typeof updateCartDisplay === 'function') {

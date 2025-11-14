@@ -1,0 +1,11 @@
+name,email,subject,message,expected_result
+John Doe,john.doe@example.com,Product Inquiry,I would like more information about your products,valid
+Jane Smith,jane.smith@test.com,Feedback,Great products! Very satisfied with my purchase,valid
+Test User,test@example.com,Question,How long does shipping take?,valid
+Alice Brown,alice.brown@domain.co,Support,I need help with my order,valid
+Bob Wilson,bob.wilson@mail.com,Complaint,Product arrived damaged,valid
+Invalid User,invalid-email,Test Subject,This should fail email validation,invalid
+Short Name,test@example.com,Subject,Message text here,invalid
+Valid Name,validuser@test.com,AB,Short subject test - should fail,invalid
+Complete Name,user@domain.com,Valid Subject,Short,invalid
+Mary Johnson,mary@example.com,Special Characters Test,Testing special chars: @#$%^&*(),valid

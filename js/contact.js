@@ -31,9 +31,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (subjectField.value.trim() === '') {
       showError(subjectField, 'subject-error', 'Subject is required.')
       isValid = false
+    } else if (subjectField.value.trim().length < 3) {
+      showError(subjectField, 'subject-error', 'Subject must be at least 3 characters.')
+      isValid = false
     }
     if (messageField.value.trim() === '') {
       showError(messageField, 'message-error', 'Message is required.')
+      isValid = false
+    } else if (messageField.value.trim().length < 10) {
+      showError(messageField, 'message-error', 'Message must be at least 10 characters.')
       isValid = false
     }
     if (isValid) {

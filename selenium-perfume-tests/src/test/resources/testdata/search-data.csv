@@ -1,0 +1,7 @@
+search_term,expected_min_count,description
+Bloom,1,Search for Bloom products
+Essence,1,Search for Essence products
+Future,1,Search for Future products
+Perfume,5,Search for Perfume (should find many)
+Eternal,1,Search for Eternal products
+NonExistent,0,Search for non-existent product

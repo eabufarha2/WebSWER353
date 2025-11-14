@@ -34,11 +34,22 @@ function updateCartDisplay() {
     if (totalsSection) {
       totalsSection.style.display = 'none';
     }
+    // Hide checkout button when cart is empty
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    if (checkoutBtn) {
+      checkoutBtn.style.display = 'none';
+    }
     return;
   }
 
   if (totalsSection) {
     totalsSection.style.display = 'block';
+  }
+
+  // Show checkout button when cart has items
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  if (checkoutBtn) {
+    checkoutBtn.style.display = 'block';
   }
 
   cartHeader.innerHTML = '<h2>Your Cart Items</h2>';

@@ -78,7 +78,13 @@ public class Header {
      */
     public int getCartCount() {
         WebElement countElement = waitHelper.waitForElementVisible(cartCount);
-        String count Text = countElement.getText().trim();
+        String countText = countElement.getText().trim();
+
+        // If empty, default to 0
+        if (countText.isEmpty()) {
+            return 0;
+        }
+
         return Integer.parseInt(countText);
     }
 
