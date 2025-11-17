@@ -19,10 +19,10 @@
         <maven.compiler.target>11</maven.compiler.target>
 
         <!-- Dependency Versions -->
-        <selenium.version>4.16.1</selenium.version>
+        <selenium.version>4.27.0</selenium.version>
         <cucumber.version>7.15.0</cucumber.version>
         <testng.version>7.8.0</testng.version>
-        <webdrivermanager.version>5.6.3</webdrivermanager.version>
+        <webdrivermanager.version>5.9.2</webdrivermanager.version>
         <apache.poi.version>5.2.5</apache.poi.version>
         <opencsv.version>5.9</opencsv.version>
         <extentreports.version>5.1.1</extentreports.version>
