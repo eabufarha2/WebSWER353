@@ -28,10 +28,7 @@ public class BrowserFactory {
         return initializeDriver(config.getBrowser());
     }
 
-    /**
-     * Initialize WebDriver for specific browser
-     * @param browserName chrome, firefox, or edge
-     */
+
     public static WebDriver initializeDriver(String browserName) {
         WebDriver webDriver = null;
 

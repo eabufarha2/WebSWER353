@@ -15,14 +15,10 @@ public class HomePage extends BasePage {
     // Locators using data-testid
     private By heroSection = By.cssSelector("[data-testid='hero-section']");
     private By heroShopNowBtn = By.cssSelector("[data-testid='hero-shop-now-btn']");
-    private By featuredSection = By.cssSelector("[data-testid='featured-section']");
     private By featuredProductsContainer = By.cssSelector("[data-testid='featured-products-container']");
-    private By newArrivalsSection = By.cssSelector("[data-testid='new-arrivals-section']");
     private By newArrivalsContainer = By.cssSelector("[data-testid='new-arrivals-container']");
     private By bannerSection = By.cssSelector("[data-testid='banner-section']");
-    private By bannerExploreBtn = By.cssSelector("[data-testid='banner-explore-btn']");
     private By productCards = By.cssSelector("[data-testid='product-card']");
-    private By addToCartButtons = By.cssSelector("a.cart");
 
     public HomePage(WebDriver driver) {
         super(driver);

@@ -11,8 +11,6 @@ public class ProductDetailPage extends BasePage {
 
     // Locators using data-testid
     private By productDetailSection = By.cssSelector("[data-testid='product-detail-section']");
-    private By productImageContainer = By.cssSelector("[data-testid='product-image-container']");
-    private By productInfoContainer = By.cssSelector("[data-testid='product-info-container']");
     private By productName = By.cssSelector("[data-testid='product-detail-name']");
     private By productBrand = By.cssSelector("[data-testid='product-detail-brand']");
     private By productRating = By.cssSelector("[data-testid='product-detail-rating']");

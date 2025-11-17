@@ -16,7 +16,6 @@ public class ShopPage extends BasePage {
     // Locators using data-testid
     private By searchInput = By.cssSelector("[data-testid='search-input']");
     private By sortSelect = By.cssSelector("[data-testid='sort-select']");
-    private By shopSection = By.cssSelector("[data-testid='shop-section']");
     private By shopProductsContainer = By.cssSelector("[data-testid='shop-products-container']");
     private By productCards = By.cssSelector("[data-testid='product-card']");
     private By productNames = By.cssSelector("[data-testid='product-name-link']");
