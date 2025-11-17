@@ -88,12 +88,17 @@ public class WaitHelper {
                 "document.querySelector('[data-testid=\"product-card\"]') !== null"
             )
         );
-        // Small additional wait for dynamic content to stabilize
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // Wait for dynamic content to stabilize (check if product count is stable)
+        wait.until(driver -> {
+            Integer count1 = ((Number) js.executeScript(
+                "return document.querySelectorAll('[data-testid=\"product-card\"]').length"
+            )).intValue();
+            try { Thread.sleep(100); } catch (InterruptedException e) {}
+            Integer count2 = ((Number) js.executeScript(
+                "return document.querySelectorAll('[data-testid=\"product-card\"]').length"
+            )).intValue();
+            return count1.equals(count2);
+        });
     }
 
     /**
@@ -108,12 +113,6 @@ public class WaitHelper {
                 "document.querySelector('[data-testid=\"product-detail-name\"]') !== null"
             )
         );
-        // Small additional wait for dynamic content to stabilize
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -121,20 +120,21 @@ public class WaitHelper {
      * Waits for cart count element to change or a short stabilization period
      */
     public void waitForCartUpdated() {
-        // Small wait for cart to process and update
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         // Verify cart count element is visible and has been updated
         wait.until(driver -> {
             Object result = js.executeScript(
                 "var cartCountElem = document.getElementById('cartCount');" +
-                "return cartCountElem !== null && cartCountElem.textContent !== null;"
+                "return cartCountElem !== null && cartCountElem.textContent !== null && cartCountElem.textContent !== '';"
             );
             return result != null && (Boolean) result;
+        });
+
+        // Wait for cart count to stabilize
+        wait.until(driver -> {
+            String count1 = (String) js.executeScript("return document.getElementById('cartCount')?.textContent || '0'");
+            try { Thread.sleep(100); } catch (InterruptedException e) {}
+            String count2 = (String) js.executeScript("return document.getElementById('cartCount')?.textContent || '0'");
+            return count1.equals(count2);
         });
     }
 
@@ -176,5 +176,63 @@ public class WaitHelper {
      */
     public void waitForJSCondition(String jsCondition) {
         wait.until(driver -> (Boolean) js.executeScript("return " + jsCondition));
+    }
+
+    /**
+     * Wait for a short duration for UI updates
+     * Waits for DOM to be stable by checking document.readyState
+     */
+    public void waitForUIUpdate() {
+        wait.until(driver ->
+            js.executeScript("return document.readyState").equals("complete")
+        );
+    }
+
+    /**
+     * Wait for element to be stable (not animating or changing)
+     */
+    public void waitForElementStable(By locator) {
+        wait.until(driver -> {
+            try {
+                WebElement element = driver.findElement(locator);
+                String text1 = element.getText();
+                Thread.sleep(100);
+                String text2 = element.getText();
+                return text1.equals(text2);
+            } catch (Exception e) {
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Wait for AJAX/fetch requests to complete
+     */
+    public void waitForAjaxComplete() {
+        wait.until(driver ->
+            (Boolean) js.executeScript(
+                "return (typeof jQuery !== 'undefined') ? jQuery.active === 0 : true"
+            )
+        );
+    }
+
+    /**
+     * Wait for specific duration using polling (more reliable than Thread.sleep)
+     */
+    public void waitForDuration(int milliseconds) {
+        long startTime = System.currentTimeMillis();
+        wait.until(driver -> (System.currentTimeMillis() - startTime) >= milliseconds);
+    }
+
+    /**
+     * Wait for element count to stabilize
+     */
+    public void waitForElementCountStable(By locator) {
+        wait.until(driver -> {
+            int count1 = driver.findElements(locator).size();
+            try { Thread.sleep(100); } catch (InterruptedException e) {}
+            int count2 = driver.findElements(locator).size();
+            return count1 == count2;
+        });
     }
 }

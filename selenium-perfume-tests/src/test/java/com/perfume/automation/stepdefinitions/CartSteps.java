@@ -40,11 +40,7 @@ public class CartSteps {
     @When("I seed the cart with test data")
     public void iSeedTheCartWithTestData() {
         cartPage.seedCart();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // Wait is already handled in seedCart() method
     }
 
     @Then("I should see at least {int} item in the cart")
@@ -159,28 +155,16 @@ public class CartSteps {
 
         // Navigate to shop page
         cartPage.navigateToShop();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        cartPage.waitForPageLoad();
 
         // Add product to cart multiple times
         for (int i = 0; i < quantity; i++) {
             executeScript("document.querySelector('[data-testid=\"add-to-cart-btn-" + productId + "\"]').click();");
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            cartPage.waitHelper.waitForUIUpdate();
         }
 
         // Wait for cart to update
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        cartPage.waitHelper.waitForCartUpdated();
     }
 
     /**

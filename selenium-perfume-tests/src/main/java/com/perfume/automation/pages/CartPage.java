@@ -143,11 +143,7 @@ public class CartPage extends BasePage {
         List<WebElement> plusButtons = driver.findElements(qtyPlusButtons);
         if (itemIndex < plusButtons.size()) {
             plusButtons.get(itemIndex).click();
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            waitHelper.waitForUIUpdate();
         }
         return this;
     }
@@ -159,11 +155,7 @@ public class CartPage extends BasePage {
         List<WebElement> minusButtons = driver.findElements(qtyMinusButtons);
         if (itemIndex < minusButtons.size()) {
             minusButtons.get(itemIndex).click();
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            waitHelper.waitForUIUpdate();
         }
         return this;
     }
@@ -175,11 +167,7 @@ public class CartPage extends BasePage {
         List<WebElement> removeBtn = driver.findElements(removeButtons);
         if (itemIndex < removeBtn.size()) {
             removeBtn.get(itemIndex).click();
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            waitHelper.waitForUIUpdate();
         }
         return this;
     }
@@ -220,11 +208,7 @@ public class CartPage extends BasePage {
      */
     public CartPage clickCheckoutButton() {
         click(checkoutBtn);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        waitHelper.waitForElementVisible(checkoutMessage);
         return this;
     }
 
@@ -254,11 +238,7 @@ public class CartPage extends BasePage {
      */
     public CartPage resetCart() {
         click(resetCartBtn);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        waitHelper.waitForUIUpdate();
         refreshPage();
         return this;
     }
@@ -268,11 +248,7 @@ public class CartPage extends BasePage {
      */
     public CartPage seedCart() {
         click(seedCartBtn);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        waitHelper.waitForCartUpdated();
         return this;
     }
 

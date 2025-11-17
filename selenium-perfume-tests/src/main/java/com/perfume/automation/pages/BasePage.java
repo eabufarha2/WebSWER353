@@ -15,7 +15,7 @@ import java.util.List;
 public class BasePage {
 
     protected WebDriver driver;
-    protected WaitHelper waitHelper;
+    public WaitHelper waitHelper;  // Public for access from step definitions
     protected JavascriptExecutor js;
     protected Header header;
 
@@ -134,7 +134,7 @@ public class BasePage {
     /**
      * Wait for page load
      */
-    protected void waitForPageLoad() {
+    public void waitForPageLoad() {
         waitHelper.waitForPageLoad();
     }
 

@@ -92,11 +92,7 @@ public class ContactPage extends BasePage {
      */
     public ContactPage clickSubmit() {
         click(submitButton);
-        try {
-            Thread.sleep(1200); // Wait for form processing and validation
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        waitHelper.waitForUIUpdate();
         return this;
     }
 
@@ -384,11 +380,7 @@ public class ContactPage extends BasePage {
      * Check if email field is marked as invalid by custom validation
      */
     public boolean isEmailFieldInvalid() {
-        try {
-            Thread.sleep(300); // Wait for validation to process
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        waitHelper.waitForUIUpdate();
         String result = (String) executeScript(
             "var errorElem = document.getElementById('email-error');" +
             "return (errorElem && errorElem.textContent && errorElem.textContent.trim().length > 0) ? 'true' : 'false';"
@@ -400,11 +392,7 @@ public class ContactPage extends BasePage {
      * Check if subject field is marked as invalid by custom validation
      */
     public boolean isSubjectFieldInvalid() {
-        try {
-            Thread.sleep(300); // Wait for validation to process
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        waitHelper.waitForUIUpdate();
         String result = (String) executeScript(
             "var errorElem = document.getElementById('subject-error');" +
             "return (errorElem && errorElem.textContent && errorElem.textContent.trim().length > 0) ? 'true' : 'false';"
@@ -416,11 +404,7 @@ public class ContactPage extends BasePage {
      * Check if message field is marked as invalid by custom validation
      */
     public boolean isMessageFieldInvalid() {
-        try {
-            Thread.sleep(300); // Wait for validation to process
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        waitHelper.waitForUIUpdate();
         String result = (String) executeScript(
             "var errorElem = document.getElementById('message-error');" +
             "return (errorElem && errorElem.textContent && errorElem.textContent.trim().length > 0) ? 'true' : 'false';"
