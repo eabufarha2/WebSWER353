@@ -156,15 +156,53 @@ public class CartSteps {
     @When("I add {string} items of product {string} to cart")
     public void iAddItemsOfProductToCart(String quantityStr, String productId) {
         int quantity = Integer.parseInt(quantityStr);
-        // Navigate to shop page and add items
-        // This is a simplified implementation
-        // In real scenario, you'd navigate to shop page and add items multiple times
+
+        // Navigate to shop page
+        cartPage.navigateToShop();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Add product to cart multiple times
+        for (int i = 0; i < quantity; i++) {
+            executeScript("document.querySelector('[data-testid=\"add-to-cart-btn-" + productId + "\"]').click();");
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Wait for cart to update
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Execute JavaScript code
+     */
+    private void executeScript(String script) {
+        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript(script);
     }
 
     @Then("the cart should have {string} items total")
     public void theCartShouldHaveItemsTotal(String expectedCountStr) {
-        // This would verify total quantity across all cart items
         int expectedCount = Integer.parseInt(expectedCountStr);
-        // Implementation depends on how you calculate total items
+
+        // Calculate total quantity across all cart items
+        int totalQuantity = 0;
+        int itemCount = cartPage.getCartItemsCount();
+
+        for (int i = 0; i < itemCount; i++) {
+            totalQuantity += cartPage.getItemQuantity(i);
+        }
+
+        Assert.assertEquals(totalQuantity, expectedCount,
+            "Total quantity mismatch. Expected: " + expectedCount + ", Actual: " + totalQuantity);
     }
 }

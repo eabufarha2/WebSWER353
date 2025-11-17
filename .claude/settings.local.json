@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mvn:*)"
+      "Bash(mvn:*)",
+      "Bash(done)",
+      "Bash(python:*)",
+      "Bash(for file in selenium-perfume-tests/src/test/resources/features/*.feature)",
+      "Bash(do basename:*)"
     ],
     "deny": [],
     "ask": []
