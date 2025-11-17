@@ -103,12 +103,8 @@ public class HomePage extends BasePage {
     public HomePage addProductToCart(String productId) {
         By addToCartBtn = By.cssSelector("[data-testid='add-to-cart-btn-" + productId + "']");
         click(addToCartBtn);
-        // Wait for notification or cart count update
-        try {
-            Thread.sleep(500); // Small wait for animation
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // Wait for cart count update
+        waitHelper.waitForCartUpdated();
         return this;
     }
 

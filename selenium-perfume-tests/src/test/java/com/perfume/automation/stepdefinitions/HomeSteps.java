@@ -93,11 +93,7 @@ public class HomeSteps {
     @When("I click the Shop Now button in hero section")
     public void iClickTheShopNowButtonInHeroSection() {
         homePage.clickHeroShopNowButton();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        homePage.waitForPageLoad();
     }
 
     @Then("discount badges should be visible on products")
@@ -109,10 +105,6 @@ public class HomeSteps {
     @When("I click on a product named {string}")
     public void iClickOnAProductNamed(String productName) {
         homePage.clickProductByName(productName);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        homePage.waitForPageLoad();
     }
 }

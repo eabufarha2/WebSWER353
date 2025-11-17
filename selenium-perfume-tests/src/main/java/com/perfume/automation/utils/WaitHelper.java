@@ -88,17 +88,10 @@ public class WaitHelper {
                 "document.querySelector('[data-testid=\"product-card\"]') !== null"
             )
         );
-        // Wait for dynamic content to stabilize (check if product count is stable)
-        wait.until(driver -> {
-            Integer count1 = ((Number) js.executeScript(
-                "return document.querySelectorAll('[data-testid=\"product-card\"]').length"
-            )).intValue();
-            try { Thread.sleep(100); } catch (InterruptedException e) {}
-            Integer count2 = ((Number) js.executeScript(
-                "return document.querySelectorAll('[data-testid=\"product-card\"]').length"
-            )).intValue();
-            return count1.equals(count2);
-        });
+        // Wait for DOM to be ready (products rendered and scripts executed)
+        wait.until(driver ->
+            js.executeScript("return document.readyState").equals("complete")
+        );
     }
 
     /**
@@ -129,13 +122,10 @@ public class WaitHelper {
             return result != null && (Boolean) result;
         });
 
-        // Wait for cart count to stabilize
-        wait.until(driver -> {
-            String count1 = (String) js.executeScript("return document.getElementById('cartCount')?.textContent || '0'");
-            try { Thread.sleep(100); } catch (InterruptedException e) {}
-            String count2 = (String) js.executeScript("return document.getElementById('cartCount')?.textContent || '0'");
-            return count1.equals(count2);
-        });
+        // Wait for DOM to be ready (cart update scripts completed)
+        wait.until(driver ->
+            js.executeScript("return document.readyState").equals("complete")
+        );
     }
 
     /**
@@ -192,17 +182,12 @@ public class WaitHelper {
      * Wait for element to be stable (not animating or changing)
      */
     public void waitForElementStable(By locator) {
-        wait.until(driver -> {
-            try {
-                WebElement element = driver.findElement(locator);
-                String text1 = element.getText();
-                Thread.sleep(100);
-                String text2 = element.getText();
-                return text1.equals(text2);
-            } catch (Exception e) {
-                return false;
-            }
-        });
+        // Wait for element to be visible first
+        waitForElementVisible(locator);
+        // Wait for DOM to be ready
+        wait.until(driver ->
+            js.executeScript("return document.readyState").equals("complete")
+        );
     }
 
     /**
@@ -228,11 +213,11 @@ public class WaitHelper {
      * Wait for element count to stabilize
      */
     public void waitForElementCountStable(By locator) {
-        wait.until(driver -> {
-            int count1 = driver.findElements(locator).size();
-            try { Thread.sleep(100); } catch (InterruptedException e) {}
-            int count2 = driver.findElements(locator).size();
-            return count1 == count2;
-        });
+        // Wait for at least one element to be present
+        wait.until(driver -> !driver.findElements(locator).isEmpty());
+        // Wait for DOM to be ready
+        wait.until(driver ->
+            js.executeScript("return document.readyState").equals("complete")
+        );
     }
 }

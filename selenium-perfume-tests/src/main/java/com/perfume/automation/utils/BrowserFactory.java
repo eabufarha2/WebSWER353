@@ -46,9 +46,7 @@ public class BrowserFactory {
                 throw new IllegalArgumentException("Unsupported browser: " + browserName);
         }
 
-        // Set timeouts
-        webDriver.manage().timeouts()
-                .implicitlyWait(Duration.ofSeconds(config.getImplicitWait()));
+        // Set timeouts (only pageLoadTimeout - using explicit waits instead of implicit)
         webDriver.manage().timeouts()
                 .pageLoadTimeout(Duration.ofSeconds(config.getPageLoadTimeout()));
 

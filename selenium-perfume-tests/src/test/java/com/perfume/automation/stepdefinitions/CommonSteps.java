@@ -120,31 +120,19 @@ public class CommonSteps {
     @Given("I navigate to home page via header")
     public void iNavigateToHomePageViaHeader() {
         getHomePage().navigateToHome();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        getHomePage().waitForPageLoad();
     }
 
     @Given("I navigate to shop page via header")
     public void iNavigateToShopPageViaHeader() {
         getShopPage().navigateToShop();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        getShopPage().waitForPageLoad();
     }
 
     @Given("I navigate to cart page via header")
     public void iNavigateToCartPageViaHeader() {
         getCartPage().navigateToCart();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        getCartPage().waitForPageLoad();
     }
 
     // Common Then steps
@@ -218,10 +206,6 @@ public class CommonSteps {
     @Given("I refresh the page")
     public void iRefreshThePage() {
         driver.navigate().refresh();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        getHomePage().waitForPageLoad();
     }
 }

@@ -49,12 +49,8 @@ public class ShopPage extends BasePage {
      */
     public ShopPage searchForProduct(String searchTerm) {
         enterText(searchInput, searchTerm);
-        // Wait a bit for search to filter
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // Wait for search results to stabilize
+        waitHelper.waitForProductsLoaded();
         return this;
     }
 
@@ -66,11 +62,8 @@ public class ShopPage extends BasePage {
         search.clear();
         // Trigger input event to update product display
         executeScript("document.getElementById('searchInput').dispatchEvent(new Event('input'));");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // Wait for products to reload
+        waitHelper.waitForProductsLoaded();
         return this;
     }
 
@@ -80,11 +73,8 @@ public class ShopPage extends BasePage {
      */
     public ShopPage sortProductsBy(String sortOption) {
         selectDropdownByValue(sortSelect, sortOption);
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // Wait for products to be re-sorted
+        waitHelper.waitForProductsLoaded();
         return this;
     }
 
@@ -93,11 +83,8 @@ public class ShopPage extends BasePage {
      */
     public ShopPage sortByText(String sortText) {
         selectDropdownByText(sortSelect, sortText);
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // Wait for products to be re-sorted
+        waitHelper.waitForProductsLoaded();
         return this;
     }
 
@@ -198,11 +185,8 @@ public class ShopPage extends BasePage {
     public ShopPage addProductToCart(String productId) {
         By addToCartBtn = By.cssSelector("[data-testid='add-to-cart-btn-" + productId + "']");
         click(addToCartBtn);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // Wait for cart count update
+        waitHelper.waitForCartUpdated();
         return this;
     }
 
@@ -215,11 +199,8 @@ public class ShopPage extends BasePage {
             String name = product.findElement(By.cssSelector("[data-testid='product-name-link']")).getText();
             if (name.equalsIgnoreCase(productName)) {
                 product.findElement(By.cssSelector("a.cart")).click();
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                // Wait for cart count update
+                waitHelper.waitForCartUpdated();
                 break;
             }
         }

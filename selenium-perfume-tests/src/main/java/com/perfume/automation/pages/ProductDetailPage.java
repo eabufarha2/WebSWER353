@@ -151,11 +151,8 @@ public class ProductDetailPage extends BasePage {
      */
     public ProductDetailPage clickAddToCartButton() {
         click(addToCartBtn);
-        try {
-            Thread.sleep(500); // Wait for cart update
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // Wait for cart count update
+        waitHelper.waitForCartUpdated();
         return this;
     }
 
